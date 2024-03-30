@@ -74,6 +74,9 @@
 		5. [Сортировка массива](#сортировка-массива)
 		6. [Работа с началом массива](#работа-с-началом-массива)
 		7. [Работа с концом массива](#работа-с-концом-массива)
+    6. [Поиск элементов](#поиск-элементов)
+    7. [Итерация по элементам](#итерация-по-элементам)
+    8. [Другие методы](#другие-методы)
 13. [Встроенные объекты](#встроенные-объекты)
 	1. [Глобальный объект](#глобальный-объект)
 		1. [Глобальные свойства](#глобальные-свойства)
@@ -1456,7 +1459,7 @@ console.log(qux) // -> "20 • 2 • 25 • () => 'Hello! World'"
 
 #### Конкатенация массивов
 
-* `concat()` – возвращает новый массив в котором конкатенированы все параметры метода перечисленные через запятую. При этом исходный массив остаётся неизменным.
+* `concat()` – возвращает новый массив в котором объеденины все перечисленные через запятую параметры. При этом исходный массив остаётся неизменным.
 
 ```js
 const foo = [1, 2]
@@ -1554,7 +1557,7 @@ array.sort(mySort) // -> 5, 11, 16, 23, 55, 98
 
 #### Работа с началом массива
 
-* `shift()` – извлекает первый элемент массива. Исходный массив также смещается (остается без первого элемента).
+* `shift()` – извлекает и возвращает первый элемент массива. Исходный массив также смещается (остается без первого элемента).
 
 ```js
 const array = ['1st', '2nd', '3rd']
@@ -1572,7 +1575,7 @@ array // -> ['1st', '2nd', '3rd', '4th', '5th', 'last']
 
 #### Работа с концом массива
 
-* `pop()` – извлекает последний элемент массива. Исходный массив также изменяется (остается без последнего элемента).
+* `pop()` – извлекает и возвращает последний элемент массива. Исходный массив также изменяется (остается без последнего элемента).
 
 ```js
 const array = [10, 'JavaScript', 101]
@@ -1586,6 +1589,97 @@ array // -> [10, 'JavaScript']
 const array = ['Ecma']
 array.push('Script', 2015) // -> 3
 array.join() // -> 'Ecma,Script,2015'
+```
+
+#### Поиск элементов
+
+* `indexOf(searchElement, fromIndex)` – возвращает индекс первого найденного элемента, соответствующего `searchElement`.
+
+```js
+const drinks = ['water', 'tea', 'coffee', 'cacao']
+const firstAppleIndex = drinks.indexOf('water') // -> 0
+const secondAppleIndex = drinks.indexOf('water', 2); // -> 3
+```
+
+* `lastIndexOf(searchElement, fromIndex)` – возвращает индекс последнего найденного элемента, соответствующего `searchElement`.
+
+```js
+const vegetables = ['tomato', 'cucumber', 'carrot', 'eggplant']
+const lastAppleIndex = vegetables.lastIndexOf('tomato') // -> 3
+```
+
+* `includes(searchElement, fromIndex)` – определяет, содержит ли массив `searchElement`.
+
+```js
+const fruits = ['apple', 'banana', 'orange']
+const hasApple = fruits.includes('apple') // -> true
+const hasMango = fruits.includes('mango') // -> false
+```
+
+* `find(callbackFn, thisArg)` – возвращает первый элемент, удовлетворяющий условию, заданному `callbackFn`.
+
+```js
+const numbers = [5, 12, 8, 130, 44]
+const foundNumber = numbers.find(element => element > 10) // -> 12
+```
+
+* `findIndex(callbackFn, thisArg)` – возвращает индекс первого элемента, удовлетворяющего условию, заданному `callbackFn`.
+
+```js
+const numbers = [5, 12, 8, 130, 44]
+const foundIndex = numbers.findIndex(element => element > 10) // -> 1
+```
+
+#### Итерация по элементам
+
+* `forEach(callbackFn, thisArg)` – выполняет `callbackFn` для каждого элемента массива.
+
+```js
+const numbers = [1, 2, 3, 4]
+numbers.forEach(element => console.log(element * 2)) // -> 2, 4, 6, 8
+```
+
+* `map(callbackFn, thisArg)` – создает новый массив с результатами вызова `callbackFn` для каждого элемента.
+
+```js
+const numbers = [1, 2, 3, 4]
+const doubledNumbers = numbers.map(element => element * 2) // -> [2, 4, 6, 8]
+```
+
+* `filter(callbackFn, thisArg)` – создает новый массив с элементами, которые прошли проверку `callbackFn`.
+
+```js
+const numbers = [1, 2, 3, 4]
+const evenNumbers = numbers.filter(element => element % 2 === 0) // -> [2, 4]
+```
+
+* `reduce(callbackFn, initialValue)` – применяет `callbackFn` к аккумулятору и каждому элементу массива, чтобы получить одно значение.
+
+```js
+const numbers = [1, 2, 3, 4]
+const sum = numbers.reduce((accumulator, element) => accumulator + element, 0) // -> 10
+```
+
+#### Другие методы
+
+* `isArray(obj)` – определяет, является ли объект массивом.
+
+```js
+Array.isArray([]) // -> true
+Array.isArray({}) // -> false
+```
+
+* `toLocaleString()` – возвращает строковое представление массива с учетом локали.
+
+```js
+prices = [7890, 120.31]
+
+// Форматирование цен с учетом локали
+formattedPrices = prices.toLocaleString('kk', {
+  style: 'currency', currency: 'KZT'
+})
+
+console.log(formattedPrices) // -> 7 890,00 KZT, 120,31 KZT
 ```
 
 ## Встроенные объекты
