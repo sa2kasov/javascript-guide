@@ -71,16 +71,18 @@
 	3. [Перебор элементов массива](#перебор-элементов-массива)
 	4. [Удаление элемента массива](#удаление-элемента-массива)
 	5. [Методы для работы с массивами](#методы-для-работы-с-массивами)
-		1. [Получение строки из массива](#получение-строки-из-массива)
-		2. [Конкатенация массивов](#конкатенация-массивов)
-		3. [Получение части массива](#получение-части-массива)
-		4. [Вставка и удаление в любом месте](#вставка-и-удаление-в-любом-месте)
-		5. [Сортировка массива](#сортировка-массива)
-		6. [Работа с началом массива](#работа-с-началом-массива)
-		7. [Работа с концом массива](#работа-с-концом-массива)
-		8. [Поиск элементов](#поиск-элементов)
-		9. [Итерация по элементам](#итерация-по-элементам)
-		10. [Другие методы](#другие-методы)
+    1. [Создание массивов](#создание-массивов)
+		2. [Получение строки из массива](#получение-строки-из-массива)
+		3. [Конкатенация массивов](#конкатенация-массивов)
+		4. [Получение части массива](#получение-части-массива)
+		5. [Вставка и удаление в любом месте](#вставка-и-удаление-в-любом-месте)
+		6. [Сортировка массива](#сортировка-массива)
+		7. [Работа с началом массива](#работа-с-началом-массива)
+		8. [Работа с концом массива](#работа-с-концом-массива)
+		9. [Поиск элементов](#поиск-элементов)
+		10. [Итерация по элементам](#итерация-по-элементам)
+    11. [Сведение массива к одному значению](#сведение-массива-к-одному-значению)
+		12. [Другие методы](#другие-методы)
 13. [Встроенные объекты](#встроенные-объекты)
 	1. [Глобальный объект](#глобальный-объект)
 		1. [Глобальные свойства](#глобальные-свойства)
@@ -1266,9 +1268,9 @@ MyObject.method() // -> "property value"
 
 ```js
 const person = {
-	name: 'John',
-	age: 32,
-	city: 'Almaty'
+  name: 'John',
+  age: 32,
+  city: 'Almaty'
 }
 
 const keys = Object.keys(person)
@@ -1279,9 +1281,9 @@ console.log(keys) // -> ["name", "age", "city"]
 
 ```js
 const person = {
-	name: 'Jane',
-	age: 31,
-	city: 'Astana'
+  name: 'Jane',
+  age: 31,
+  city: 'Astana'
 }
 
 const values = Object.values(person)
@@ -1292,9 +1294,9 @@ console.log(values) // -> ["Jane", 31, "Astana"]
 
 ```js
 const person = {
-	name: 'John',
-	age: 32,
-	city: 'Shymkent'
+  name: 'John',
+  age: 32,
+  city: 'Shymkent'
 }
 
 const entries = Object.entries(person)
@@ -1305,8 +1307,8 @@ console.log(entries) // -> [["name", "John"], ["age", 33], ["city", "Shymkent"]]
 
 ```js
 const person = {
-	name: 'Jane',
-	age: 31
+  name: 'Jane',
+  age: 31
 }
 
 console.log(person.hasOwnProperty('name')) // -> true
@@ -1334,9 +1336,9 @@ console.log(obj + 10) // -> 42 (valueOf() преобразует объект в
 
 ```js
 const user = {
-	id: 123,
-	login: 'Jane',
-	password: '******',
+  id: 123,
+  login: 'Jane',
+  password: '******',
 }
 
 console.log(user.hasOwnProperty('login')) // -> true
@@ -1346,9 +1348,9 @@ Object.prototype.myProperty = 'myValue'
 
 // Напечатает только собственные свойства и методы
 for (let i in user) {
-	if (user.hasOwnProperty(i)) {
-		console.log(user[i])
-	}
+  if (user.hasOwnProperty(i)) {
+    console.log(user[i])
+  }
 } // -> 123, Jane, ******
 ```
 
@@ -1455,7 +1457,7 @@ console.log(target) // -> { name: 'John', age: 32, city: "Almaty" }
 
 ```js
 const user = {
-	name: 'Jane'
+	name: 'Jane',
 	age: 31
 }
 
@@ -1468,7 +1470,7 @@ console.log(user) // { name: "Jane", ag }
 
 ```js
 const user = {
-	name: 'John'
+	name: 'John',
 	age: 32
 }
 
@@ -1653,6 +1655,44 @@ array // ["Jane", 36, undefined, undefined]
 ```
 
 ### Методы для работы с массивами
+
+#### Создание массивов
+
+* `Array.from()` – создает новый массив из итерируемого объекта или псевдомассива.
+
+```js
+// Массив из строки
+Array.from('hello') // -> ["h", "e", "l", "l", "o"]
+
+// Массив из NodeList
+let paragraphs = document.querySelectorAll('p')
+Array.from(paragraphs) // -> массив элементов <p>
+
+// Создание массива с преобразованием элементов
+let numbers = [1, 2, 3]
+Array.from(numbers, n => n * 2) // -> [2, 4, 6]
+```
+
+* `Array.fromAsync()` – создает новый массив из асинхронного итерируемого объекта.
+
+```js
+async function getFiles() {
+  let dir = await openDir('.')
+  let files = []
+  for await (let file of dir) {
+    files.push(file)
+  }
+  return files
+}
+
+let filesArr = await Array.fromAsync(getFiles()) // -> массив файлов в директории
+```
+
+* `Array.of()` – создает новый массив из переданных аргументов.
+
+```js
+Array.of('Hi', true, 3, [4], {5: 6}) // -> ['Hi', true, 3, [4], {5: 6}]
+```
 
 #### Получение строки из массива
 
@@ -1865,12 +1905,25 @@ const numbers = [1, 2, 3, 4]
 const evenNumbers = numbers.filter(element => element % 2 === 0) // -> [2, 4]
 ```
 
+#### Сведение массива к одному значению
+
 * `reduce(callbackFn, initialValue)` – применяет `callbackFn` к аккумулятору и каждому элементу массива, чтобы получить одно значение.
 
 ```js
 const numbers = [1, 2, 3, 4]
 const sum = numbers.reduce((accumulator, element) => accumulator + element, 0) // -> 10
 ```
+
+* `reduceRight()` – то же, что и `reduce()`, но применяет callback-функцию к элементам массива в обратном порядке (справа-налево).
+
+```js
+const numbers = [1, 2, 3, 4, 5]
+// Вычисление факториала 5 (5! = 5 * 4 * 3 * 2 * 1)
+const factorial = numbers.reduceRight((acc, number) => acc * number, 1)
+console.log(factorial) // -> 120
+```
+
+В примере выше callback-функция умножает аккумулятор `acc` на каждый элемент массива, начиная с последнего элемента `5` и заканчивая первым `1`.
 
 #### Другие методы
 
