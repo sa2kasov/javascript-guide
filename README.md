@@ -534,7 +534,7 @@ _Шаблонные литералы_ появились в стандарте E
 ```js
 // Создание HTML-кода
 const term = 'Template Literals'
-const description = 'informally called _template strings,_ enclosed by backtick (`` ` ``) characters instead of double or single quotes'
+const description = 'are literals enclosed by backtick (`` ` ``)'
 
 const html = `
 <dl>
@@ -554,15 +554,21 @@ WHERE id = ${id}`
 Шаблонные строки могут быть "тегированы" функцией, которая позволяет обрабатывать строку и выражения перед их объединением. Первый аргумент функции тега содержит массив строковых значений. Остальные аргументы относятся к выражениям.
 
 ```js
-function highlight(strings, ...values) {
+function highlight(strings, nameExp, ...values) {
   // Обработка строк и значений
   strings[0] // -> "Hello, "
-  strings[1] // -> "!"
-  values[0] // -> "Jane"
+  strings[1] // -> "! You're "
+  strings[2] // -> "years old"
+  values[0] // -> 32
+  nameExp // "Jane"
+  return `${strings[0]}${nameExp} and Welcome${strings[1]}turning ${values[0] + 1}${strings[2]} next year.`
 }
 
 let name = 'Jane'
-let message = highlight`Hello, ${name}!`
+let age = 32
+let message = highlight`Hello, ${name}! You're ${age} years old`
+console.log(message)
+// Hello, Jane and Welcome! You're  turning 33 years old next year.
 ```
 
 **Безопасность**
