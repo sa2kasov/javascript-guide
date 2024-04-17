@@ -119,6 +119,7 @@
 	1. [Принципы ООП](#принципы-ооп)
 	2. [Функция-конструктор](#функция-конструктор)
 	3. [Прототипы](#прототипы)
+	4. [Классы](#классы)
 15. [BOM (Объектная модель браузера)](#bom-Объектная-модель-браузера)
 	1. [Свойства и методы объекта Window](#свойства-и-методы-window)
 	2. [Фреймы](#фреймы)
@@ -2899,6 +2900,32 @@ user1.constructor.prototype.info = function() {
   Age: ${this.age};
   ${this.married ? 'Married: Yes' : 'Married: No'}`
 }
+```
+
+### Классы
+
+_Классы_ называют синтаксическим сахаром поверх прототипного наследования в JavaScript, делающий код более читаемым и похожим на другие ООП языки.
+
+```js
+class Animal {
+  constructor(species) {
+    this.species = species
+  }
+  
+  breathe() {
+    console.log('The animal is breathes')
+  }
+}
+
+class Dog extends Animal {
+  bark() {
+    console.log('Woof! Woof!')
+  }
+}
+
+const Rex = new Dog('canids')
+Rex.breathe() // -> The animal is breathes
+Rex.bark() // -> Woof! Woof!
 ```
 
 ## BOM (Объектная модель браузера)
